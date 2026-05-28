@@ -5,7 +5,7 @@
     "buildCommand": "npm run build"
   },
   "deploy": {
-    "startCommand": "node -e \"if(!process.env.DATABASE_URL){console.error('ERROR: DATABASE_URL not set. Add a PostgreSQL service and link it.');process.exit(1)};if(!process.env.JWT_SECRET){console.error('ERROR: JWT_SECRET not set. Add it in Railway environment variables.');process.exit(1)}\" && npm run prisma:generate && npm run prisma:patch && npx prisma migrate deploy && npx tsx prisma/seed.ts && node dist/src/main.js",
+    "startCommand": "bash start.sh",
     "healthcheckPath": "/health",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
