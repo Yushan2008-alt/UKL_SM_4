@@ -2,7 +2,13 @@ import 'dotenv/config'
 import { PrismaPg } from '@prisma/adapter-pg'
 import * as bcrypt from 'bcrypt'
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+function isLocalhost(url: string): boolean {
+  return /localhost|127\.0\.0\.1|::1/.test(url)
+}
+
+const dbUrl = process.env.DATABASE_URL!
+const ssl = isLocalhost(dbUrl) ? undefined : { rejectUnauthorized: false }
+const adapter = new PrismaPg({ connectionString: dbUrl, ssl })
 
 async function getPrisma() {
   const mod = await import('./../src/@generated/prisma/client.js')

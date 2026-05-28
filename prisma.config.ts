@@ -1,6 +1,10 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+function isLocalhost(url: string): boolean {
+  return /localhost|127\.0\.0\.1|::1/.test(url)
+}
+
 function getDatabaseUrl(): string {
   const url =
     process.env["DATABASE_URL"] ||
@@ -14,6 +18,11 @@ function getDatabaseUrl(): string {
       "Railway: add a PostgreSQL service and link it to this service. " +
       "Local: set DATABASE_URL in .env file.",
     )
+  }
+
+  if (!isLocalhost(url) && !url.includes("sslmode")) {
+    const sep = url.includes("?") ? "&" : "?"
+    return url + sep + "sslmode=require"
   }
 
   return url

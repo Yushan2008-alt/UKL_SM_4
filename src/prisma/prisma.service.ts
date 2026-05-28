@@ -13,6 +13,15 @@ async function getPC() {
   return PC
 }
 
+function isLocalhost(url: string): boolean {
+  return /localhost|127\.0\.0\.1|::1/.test(url)
+}
+
+function getAdapterOptions(url: string) {
+  const ssl = isLocalhost(url) ? undefined : { rejectUnauthorized: false }
+  return { connectionString: url, ssl }
+}
+
 @Injectable()
 export class PrismaService implements OnModuleInit, OnModuleDestroy {
   public prisma!: PrismaClient
@@ -21,9 +30,8 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     const Client = await getPC()
-    const adapter = new PrismaPg({
-      connectionString: this.configService.get<string>('DATABASE_URL'),
-    })
+    const url = this.configService.get<string>('DATABASE_URL')!
+    const adapter = new PrismaPg(getAdapterOptions(url))
     this.prisma = new Client({ adapter })
     await this.prisma.$connect()
   }
