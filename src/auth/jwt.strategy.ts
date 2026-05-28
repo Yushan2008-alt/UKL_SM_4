@@ -11,12 +11,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private prisma: PrismaService,
     config: ConfigService,
   ) {
+    const secret = config.get<string>('JWT_SECRET')
+    if (!secret) {
+      throw new Error(
+        'JWT_SECRET is not set. Add JWT_SECRET to Railway environment variables.',
+      )
+    }
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => req?.cookies?.access_token,
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
-      secretOrKey: config.get<string>('JWT_SECRET')!,
+      secretOrKey: secret,
     })
   }
 
