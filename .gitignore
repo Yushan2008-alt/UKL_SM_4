@@ -6,6 +6,7 @@
 # Logs
 logs
 *.log
+*.err
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
@@ -45,6 +46,9 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+
+# uploads (using Cloudinary now)
+/uploads
 
 # Runtime data
 pids
