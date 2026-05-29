@@ -13,25 +13,38 @@ import { GoogleLoginPayload } from './dto/google-login.object'
 @Injectable()
 export class AuthService {
   private googleClient: OAuth2Client
+  private readonly clientId: string
 
   constructor(
     private prisma: PrismaService,
     private jwt: JwtService,
     private config: ConfigService,
   ) {
-    this.googleClient = new OAuth2Client(this.config.get<string>('GOOGLE_CLIENT_ID'))
+    this.clientId = this.config.get<string>('GOOGLE_CLIENT_ID') ?? ''
+    this.googleClient = new OAuth2Client(this.clientId)
   }
 
   async googleLogin(idToken: string): Promise<GoogleLoginPayload> {
+    if (!this.clientId) {
+      throw new UnauthorizedException(
+        'GOOGLE_CLIENT_ID not configured on server. Hubungi developer.',
+      )
+    }
+
     let payload: { email?: string; name?: string; sub?: string }
     try {
       const ticket = await this.googleClient.verifyIdToken({
         idToken,
-        audience: this.config.get<string>('GOOGLE_CLIENT_ID'),
+        audience: this.clientId,
       })
       payload = ticket.getPayload()!
-    } catch {
-      throw new UnauthorizedException('Token Google tidak valid')
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error'
+      throw new UnauthorizedException(
+        process.env.NODE_ENV === 'production'
+          ? 'Token Google tidak valid'
+          : `Token Google tidak valid: ${message}`,
+      )
     }
 
     if (!payload.email) throw new UnauthorizedException('Email tidak ditemukan di token Google')

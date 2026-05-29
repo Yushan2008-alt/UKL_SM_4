@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, UseGuards } from '@nestjs/common'
+import { Controller, Post, Body, Res, UseGuards, BadRequestException } from '@nestjs/common'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import type { Response } from 'express'
 import { AuthService } from './auth.service'
@@ -30,6 +30,8 @@ export class AuthController {
 
   @Post('google')
   async googleLogin(@Body() input: GoogleLoginInput) {
-    return this.auth.googleLogin(input.idToken)
+    const token = input.idToken ?? input.credential
+    if (!token) throw new BadRequestException('Field idToken atau credential diperlukan')
+    return this.auth.googleLogin(token)
   }
 }
