@@ -21,6 +21,18 @@ export class UsersService {
     return this.prisma.user.update({ where: { id }, data: input })
   }
 
+  async becomeSeller(id: string) {
+    const user = await this.findById(id)
+    if (user.role === 'SELLER') throw new BadRequestException('Anda sudah menjadi penjual')
+    if (user.role === 'ADMIN') throw new BadRequestException('Admin tidak bisa menjadi penjual')
+
+    return this.prisma.user.update({
+      where: { id },
+      data: { role: 'SELLER', isVerified: false },
+      select: { id: true, name: true, email: true, role: true, isVerified: true },
+    })
+  }
+
   async verifySeller(id: string) {
     const user = await this.findById(id)
     if (user.role !== 'SELLER') throw new BadRequestException('Hanya akun SELLER yang bisa diverifikasi')

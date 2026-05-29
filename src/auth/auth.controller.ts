@@ -4,6 +4,7 @@ import type { Response } from 'express'
 import { AuthService } from './auth.service'
 import { RegisterInput } from './dto/register.input'
 import { LoginInput } from './dto/login.input'
+import { GoogleLoginInput } from './dto/google-login.input'
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard'
 
 @ApiTags('Auth')
@@ -25,5 +26,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async logout(@Res({ passthrough: true }) res: Response) {
     return this.auth.logout(res)
+  }
+
+  @Post('google')
+  async googleLogin(@Body() input: GoogleLoginInput) {
+    return this.auth.googleLogin(input.idToken)
   }
 }

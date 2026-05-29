@@ -15,12 +15,30 @@ export class UploadService {
 
   async uploadImage(buffer: Buffer, originalName: string): Promise<string> {
     return new Promise((resolve, reject) => {
+      const ext = originalName.split('.').pop()?.toLowerCase() ?? 'jpg'
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          folder: 'student-commerce',
+          folder: 'student-commerce/images',
           public_id: `${Date.now()}-${originalName.replace(/\.[^.]+$/, '')}`,
           resource_type: 'image',
-          format: 'webp',
+          format: ext === 'png' ? 'png' : 'webp',
+        },
+        (error, result) => {
+          if (error) reject(error)
+          else resolve(result!.secure_url)
+        },
+      )
+      Readable.from(buffer).pipe(uploadStream)
+    })
+  }
+
+  async uploadFile(buffer: Buffer, originalName: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'student-commerce/files',
+          public_id: `${Date.now()}-${originalName}`,
+          resource_type: 'raw',
         },
         (error, result) => {
           if (error) reject(error)

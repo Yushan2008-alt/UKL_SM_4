@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Param, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Patch, Post, Param, Body, UseGuards } from '@nestjs/common'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { UsersService } from './users.service'
 import { UpdateUserInput } from './dto/update-user.input'
@@ -30,6 +30,12 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async user(@Param('id') id: string) {
     return this.usersService.findById(id)
+  }
+
+  @Post('become-seller')
+  @UseGuards(JwtAuthGuard)
+  async becomeSeller(@CurrentUser() user: any) {
+    return this.usersService.becomeSeller(user.id)
   }
 
   @Patch()
