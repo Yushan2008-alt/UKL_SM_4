@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Post, Param, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Patch, Post, Param, Body, UseGuards, Req } from '@nestjs/common'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { PaymentsService } from './payments.service'
 import { UpdatePaymentStatusInput } from './dto/update-payment-status.input'
@@ -22,12 +22,14 @@ export class PaymentsController {
   @Patch(':orderId/status')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.SELLER, Role.ADMIN)
+  @Roles(Role.BUYER, Role.SELLER, Role.ADMIN)
   async updatePaymentStatus(
     @Param('orderId') orderId: string,
     @Body() input: UpdatePaymentStatusInput,
+    @Req() req: any,
   ) {
-    return this.payments.updateStatus(orderId, input.status)
+    const payment = await this.payments.updateStatus(orderId, input.status)
+    return payment
   }
 
   @Post('webhook')

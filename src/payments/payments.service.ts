@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException, Logger } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { PaymentStatus } from '../common/enums/payment-status.enum'
 
@@ -13,13 +13,36 @@ export class PaymentsService {
   }
 
   async updateStatus(orderId: string, status: PaymentStatus) {
-    const payment = await this.prisma.payment.findUnique({ where: { orderId } })
+    const payment = await this.prisma.payment.findUnique({
+      where: { orderId },
+      include: { order: { include: { items: { include: { product: { select: { sellerId: true } } } }, buyer: { select: { name: true } } } } },
+    })
     if (!payment) throw new NotFoundException('Pembayaran tidak ditemukan')
 
     const data: any = { status }
     if (status === 'PAID') data.paidAt = new Date()
 
-    return this.prisma.payment.update({ where: { orderId }, data })
+    const updated = await this.prisma.payment.update({ where: { orderId }, data })
+
+    if (status === 'PAID') {
+      await this.prisma.order.update({
+        where: { id: orderId },
+        data: { status: 'PROCESSING' },
+      })
+
+      const sellerIds = [...new Set(payment.order.items.map((i) => i.product.sellerId))]
+      for (const sellerId of sellerIds) {
+        await this.prisma.notification.create({
+          data: {
+            title: 'Pembayaran Diterima',
+            message: `Pesanan #${orderId.slice(-8).toUpperCase()} telah dibayar oleh ${payment.order.buyer.name}`,
+            userId: sellerId,
+          },
+        })
+      }
+    }
+
+    return updated
   }
 
   async handleWebhook(payload: any) {

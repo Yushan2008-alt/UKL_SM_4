@@ -13,6 +13,7 @@ import { ReviewsModule } from './reviews/reviews.module'
 import { AddressesModule } from './addresses/addresses.module'
 import { UploadModule } from './upload/upload.module'
 import { NotificationsModule } from './notifications/notifications.module'
+import { ChatModule } from './chat/chat.module'
 
 @Module({
   controllers: [AppController],
@@ -30,6 +31,7 @@ import { NotificationsModule } from './notifications/notifications.module'
     AddressesModule,
     UploadModule,
     NotificationsModule,
+    ChatModule,
   ],
 })
 export class AppModule {}

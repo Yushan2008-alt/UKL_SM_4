@@ -74,12 +74,20 @@ export class ProductsService {
       name: input.name,
       description: input.description,
       price: input.price,
-      stock: input.productType === 'DIGITAL' ? -1 : (input.stock ?? 0),
+      stock: input.productType === 'DIGITAL'
+        ? (input.stock != null && input.stock > 0 ? input.stock : -1)
+        : (input.stock ?? 0),
       productType: input.productType,
       fileUrl: input.fileUrl ?? null,
       categoryId: input.categoryId,
       sellerId: userId,
       isApproved: true,
+    }
+
+    if (input.imageUrl) {
+      data.images = {
+        create: [{ url: input.imageUrl, isPrimary: true }]
+      }
     }
 
     return this.prisma.product.create({
@@ -93,9 +101,18 @@ export class ProductsService {
     if (!product) throw new NotFoundException('Produk tidak ditemukan')
     if (userRole !== 'ADMIN' && product.sellerId !== userId) throw new ForbiddenException('Bukan produk Anda')
 
+    const { imageUrl, fileSize, weight, ...updateData } = input as any
+
+    if (imageUrl) {
+      updateData.images = {
+        deleteMany: {}, // Hapus image lama
+        create: [{ url: imageUrl, isPrimary: true }]
+      }
+    }
+
     return this.prisma.product.update({
       where: { id },
-      data: input,
+      data: updateData,
       include: { images: true, category: true, seller: { select: { id: true, name: true, email: true } } },
     })
   }

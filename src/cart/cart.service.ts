@@ -43,14 +43,14 @@ export class CartService {
     const product = await this.prisma.product.findUnique({ where: { id: productId } })
     if (!product) throw new NotFoundException('Produk tidak ditemukan')
     if (!product.isActive || !product.isApproved) throw new BadRequestException('Produk tidak tersedia')
-    if (quantity > product.stock) throw new BadRequestException('Stok tidak mencukupi')
+    if (product.stock >= 0 && quantity > product.stock) throw new BadRequestException('Stok tidak mencukupi')
 
     const cart = await this.ensureCart(userId)
 
     const existing = cart.items.find((i) => i.productId === productId)
     if (existing) {
       const newQty = existing.quantity + quantity
-      if (newQty > product.stock) throw new BadRequestException('Stok tidak mencukupi')
+      if (product.stock >= 0 && newQty > product.stock) throw new BadRequestException('Stok tidak mencukupi')
       await this.prisma.cartItem.update({
         where: { id: existing.id },
         data: { quantity: newQty },
@@ -69,7 +69,7 @@ export class CartService {
 
     const product = await this.prisma.product.findUnique({ where: { id: productId } })
     if (!product) throw new NotFoundException('Produk tidak ditemukan')
-    if (quantity > product.stock) throw new BadRequestException('Stok tidak mencukupi')
+    if (product.stock >= 0 && quantity > product.stock) throw new BadRequestException('Stok tidak mencukupi')
 
     const cart = await this.ensureCart(userId)
     const item = cart.items.find((i) => i.productId === productId)

@@ -9,4 +9,7 @@ export class CreateProductInput {
   @ApiProperty() @IsUUID() categoryId!: string
   @ApiProperty({ enum: ['PHYSICAL', 'DIGITAL'], default: 'PHYSICAL' }) @IsEnum(['PHYSICAL', 'DIGITAL']) productType!: 'PHYSICAL' | 'DIGITAL'
   @ApiPropertyOptional() @ValidateIf(o => o.productType === 'DIGITAL') @IsOptional() fileUrl?: string
+  @ApiPropertyOptional() @IsOptional() imageUrl?: string
+  @ApiPropertyOptional() @IsOptional() fileSize?: number
+  @ApiPropertyOptional() @IsOptional() weight?: number
 }

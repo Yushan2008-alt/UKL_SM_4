@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import type { PrismaClient } from '../@generated/prisma/client.js'
 
@@ -31,7 +32,8 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit() {
     const Client = await getPC()
     const url = this.configService.get<string>('DATABASE_URL')!
-    const adapter = new PrismaPg(getAdapterOptions(url))
+    const pool = new Pool(getAdapterOptions(url))
+    const adapter = new PrismaPg(pool)
     this.prisma = new Client({ adapter })
     await this.prisma.$connect()
   }
@@ -52,6 +54,7 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
   get review() { return this.prisma?.review }
   get shippingAddress() { return this.prisma?.shippingAddress }
   get notification() { return this.prisma?.notification }
+  get message() { return this.prisma?.message }
 
   $transaction(fn: (tx: any) => Promise<any>) {
     return this.prisma.$transaction(fn)

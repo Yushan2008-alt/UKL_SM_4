@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import * as bcrypt from 'bcrypt'
 
@@ -8,7 +9,8 @@ function isLocalhost(url: string): boolean {
 
 const dbUrl = process.env.DATABASE_URL!
 const ssl = isLocalhost(dbUrl) ? undefined : { rejectUnauthorized: false }
-const adapter = new PrismaPg({ connectionString: dbUrl, ssl })
+const pool = new Pool({ connectionString: dbUrl, ssl })
+const adapter = new PrismaPg(pool)
 
 async function getPrisma() {
   const mod = await import('./../src/@generated/prisma/client.js')

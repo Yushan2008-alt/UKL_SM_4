@@ -77,3 +77,8 @@ export type ShippingAddress = Prisma.ShippingAddressModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel

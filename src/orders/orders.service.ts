@@ -53,7 +53,7 @@ export class OrdersService {
     if (!cart || cart.items.length === 0) throw new BadRequestException('Keranjang kosong')
 
     for (const item of cart.items) {
-      if (item.product.stock < item.quantity) {
+      if (item.product.stock >= 0 && item.product.stock < item.quantity) {
         throw new BadRequestException(`Stok ${item.product.name} tidak cukup`)
       }
     }
@@ -80,10 +80,12 @@ export class OrdersService {
       })
 
       for (const item of cart.items) {
-        await tx.product.update({
-          where: { id: item.productId },
-          data: { stock: { decrement: item.quantity } },
-        })
+        if (item.product.stock >= 0) {
+          await tx.product.update({
+            where: { id: item.productId },
+            data: { stock: { decrement: item.quantity } },
+          })
+        }
       }
 
       await tx.payment.create({
