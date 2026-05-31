@@ -23,8 +23,11 @@ async function bootstrap() {
   app.enableCors({
     origin: corsOrigin === '*' ? true : corsOrigin.split(',').map(s => s.trim()),
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    exposedHeaders: ['Authorization', 'Set-Cookie'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   })
   logger.log(`CORS origin: ${corsOrigin}`)
 

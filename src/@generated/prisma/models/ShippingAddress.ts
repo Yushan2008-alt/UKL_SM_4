@@ -395,9 +395,9 @@ export type ShippingAddressOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ShippingAddressScalarRelationFilter = {
-  is?: Prisma.ShippingAddressWhereInput
-  isNot?: Prisma.ShippingAddressWhereInput
+export type ShippingAddressNullableScalarRelationFilter = {
+  is?: Prisma.ShippingAddressWhereInput | null
+  isNot?: Prisma.ShippingAddressWhereInput | null
 }
 
 export type ShippingAddressCountOrderByAggregateInput = {
@@ -487,10 +487,12 @@ export type ShippingAddressCreateNestedOneWithoutOrdersInput = {
   connect?: Prisma.ShippingAddressWhereUniqueInput
 }
 
-export type ShippingAddressUpdateOneRequiredWithoutOrdersNestedInput = {
+export type ShippingAddressUpdateOneWithoutOrdersNestedInput = {
   create?: Prisma.XOR<Prisma.ShippingAddressCreateWithoutOrdersInput, Prisma.ShippingAddressUncheckedCreateWithoutOrdersInput>
   connectOrCreate?: Prisma.ShippingAddressCreateOrConnectWithoutOrdersInput
   upsert?: Prisma.ShippingAddressUpsertWithoutOrdersInput
+  disconnect?: Prisma.ShippingAddressWhereInput | boolean
+  delete?: Prisma.ShippingAddressWhereInput | boolean
   connect?: Prisma.ShippingAddressWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShippingAddressUpdateToOneWithWhereWithoutOrdersInput, Prisma.ShippingAddressUpdateWithoutOrdersInput>, Prisma.ShippingAddressUncheckedUpdateWithoutOrdersInput>
 }

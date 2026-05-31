@@ -9,12 +9,13 @@ export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
   async findAll(filter: FilterProductInput) {
-    const { query, categoryId, minPrice, maxPrice, minRating, sort, page = 1, limit = 12 } = filter
+    const { query, categoryId, minPrice, maxPrice, minRating, sort, productType, page = 1, limit = 12 } = filter
 
     const where: any = { isActive: true, isApproved: true }
 
     if (query) where.name = { contains: query, mode: 'insensitive' }
     if (categoryId) where.categoryId = categoryId
+    if (productType) where.productType = productType
     if (minPrice !== undefined || maxPrice !== undefined) {
       where.price = {}
       if (minPrice !== undefined) where.price.gte = minPrice
@@ -65,8 +66,24 @@ export class ProductsService {
       throw new BadRequestException('Akun seller belum diverifikasi')
     }
 
+    if (input.productType === 'DIGITAL' && !input.fileUrl) {
+      throw new BadRequestException('Produk digital wajib memiliki fileUrl')
+    }
+
+    const data: any = {
+      name: input.name,
+      description: input.description,
+      price: input.price,
+      stock: input.productType === 'DIGITAL' ? -1 : (input.stock ?? 0),
+      productType: input.productType,
+      fileUrl: input.fileUrl ?? null,
+      categoryId: input.categoryId,
+      sellerId: userId,
+      isApproved: true,
+    }
+
     return this.prisma.product.create({
-      data: { ...input, sellerId: userId, isApproved: true },
+      data,
       include: { images: true, category: true, seller: { select: { id: true, name: true, email: true } } },
     })
   }

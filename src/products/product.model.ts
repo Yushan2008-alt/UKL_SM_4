@@ -22,6 +22,8 @@ export class Product {
   description!: string
   price!: number
   stock!: number
+  productType!: string
+  fileUrl?: string
   isActive!: boolean
   isApproved!: boolean
   avgRating!: number

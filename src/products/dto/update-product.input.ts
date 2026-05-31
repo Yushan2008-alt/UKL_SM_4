@@ -1,4 +1,4 @@
-import { IsOptional, MinLength, Min, IsUUID } from 'class-validator'
+import { IsOptional, MinLength, Min, IsUUID, IsEnum, ValidateIf } from 'class-validator'
 import { ApiPropertyOptional } from '@nestjs/swagger'
 
 export class UpdateProductInput {
@@ -7,4 +7,6 @@ export class UpdateProductInput {
   @ApiPropertyOptional() @IsOptional() @Min(0) price?: number
   @ApiPropertyOptional() @IsOptional() @Min(0) stock?: number
   @ApiPropertyOptional() @IsOptional() @IsUUID() categoryId?: string
+  @ApiPropertyOptional({ enum: ['PHYSICAL', 'DIGITAL'] }) @IsOptional() @IsEnum(['PHYSICAL', 'DIGITAL']) productType?: 'PHYSICAL' | 'DIGITAL'
+  @ApiPropertyOptional() @IsOptional() @ValidateIf(o => o.productType === 'DIGITAL') fileUrl?: string
 }

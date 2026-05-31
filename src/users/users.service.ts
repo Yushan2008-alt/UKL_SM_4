@@ -17,7 +17,13 @@ export class UsersService {
   }
 
   async update(id: string, input: UpdateUserInput) {
-    await this.findById(id)
+    const user = await this.findById(id)
+
+    if (input.email && input.email !== user.email) {
+      const existing = await this.prisma.user.findUnique({ where: { email: input.email } })
+      if (existing) throw new BadRequestException('Email sudah digunakan user lain')
+    }
+
     return this.prisma.user.update({ where: { id }, data: input })
   }
 

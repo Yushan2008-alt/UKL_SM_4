@@ -37,3 +37,11 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const ProductType = {
+  PHYSICAL: 'PHYSICAL',
+  DIGITAL: 'DIGITAL'
+} as const
+
+export type ProductType = (typeof ProductType)[keyof typeof ProductType]

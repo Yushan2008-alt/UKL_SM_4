@@ -8,6 +8,7 @@ export class FilterProductInput {
   @ApiPropertyOptional() @IsOptional() maxPrice?: number
   @ApiPropertyOptional() @IsOptional() @Min(1) @Max(5) minRating?: number
   @ApiPropertyOptional({ enum: ['latest', 'cheapest', 'popular', 'rating'] }) @IsOptional() @IsEnum(['latest', 'cheapest', 'popular', 'rating']) sort?: string
+  @ApiPropertyOptional({ enum: ['PHYSICAL', 'DIGITAL'] }) @IsOptional() @IsEnum(['PHYSICAL', 'DIGITAL']) productType?: string
   @ApiPropertyOptional() @IsOptional() @Min(1) page?: number
   @ApiPropertyOptional() @IsOptional() @Min(1) @Max(50) limit?: number
 }
