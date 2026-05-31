@@ -160,6 +160,8 @@ model Payment {
   status    PaymentStatus @default(UNPAID)
   paidAt    DateTime?
   invoiceNo String        @unique @default(cuid())
+  qrCodeUrl String?
+  qrString  String?
   createdAt DateTime      @default(now())
 
   order   Order  @relation(fields: [orderId], references: [id])

@@ -191,6 +191,8 @@ export const PaymentScalarFieldEnum = {
   status: 'status',
   paidAt: 'paidAt',
   invoiceNo: 'invoiceNo',
+  qrCodeUrl: 'qrCodeUrl',
+  qrString: 'qrString',
   createdAt: 'createdAt',
   orderId: 'orderId'
 } as const

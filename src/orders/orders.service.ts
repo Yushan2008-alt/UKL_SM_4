@@ -53,7 +53,7 @@ export class OrdersService {
     if (!cart || cart.items.length === 0) throw new BadRequestException('Keranjang kosong')
 
     for (const item of cart.items) {
-      if (item.product.stock >= 0 && item.product.stock < item.quantity) {
+      if (item.product.stock !== -1 && item.product.stock < item.quantity) {
         throw new BadRequestException(`Stok ${item.product.name} tidak cukup`)
       }
     }
@@ -80,7 +80,7 @@ export class OrdersService {
       })
 
       for (const item of cart.items) {
-        if (item.product.stock >= 0) {
+        if (item.product.stock !== -1) {
           await tx.product.update({
             where: { id: item.productId },
             data: { stock: { decrement: item.quantity } },
@@ -88,8 +88,12 @@ export class OrdersService {
         }
       }
 
+      const qrString = input.paymentMethod === 'QRIS'
+        ? `Payment:${newOrder.id}:${totalAmount}:${Date.now()}`
+        : null
+
       await tx.payment.create({
-        data: { orderId: newOrder.id, amount: totalAmount, method: input.paymentMethod, status: 'UNPAID' },
+        data: { orderId: newOrder.id, amount: totalAmount, method: input.paymentMethod, status: 'UNPAID', qrString },
       })
 
       await tx.cartItem.deleteMany({ where: { cartId: cart.id } })

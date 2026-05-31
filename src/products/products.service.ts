@@ -103,6 +103,11 @@ export class ProductsService {
 
     const { imageUrl, fileSize, weight, ...updateData } = input as any
 
+    const isDigital = product.productType === 'DIGITAL' || input.productType === 'DIGITAL'
+    if (isDigital) {
+      updateData.stock = -1
+    }
+
     if (imageUrl) {
       updateData.images = {
         deleteMany: {}, // Hapus image lama

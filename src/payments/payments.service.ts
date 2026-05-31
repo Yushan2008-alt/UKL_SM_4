@@ -1,10 +1,14 @@
-import { Injectable, NotFoundException, Logger } from '@nestjs/common'
+import { Injectable, NotFoundException, ForbiddenException, Logger } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { PaymentStatus } from '../common/enums/payment-status.enum'
+import { NotificationsGateway } from '../notifications/notifications.gateway'
 
 @Injectable()
 export class PaymentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notifGateway: NotificationsGateway,
+  ) {}
 
   async findByOrder(orderId: string) {
     const payment = await this.prisma.payment.findUnique({ where: { orderId } })
@@ -12,12 +16,13 @@ export class PaymentsService {
     return payment
   }
 
-  async updateStatus(orderId: string, status: PaymentStatus) {
+  async updateStatus(orderId: string, status: PaymentStatus, userId?: string) {
     const payment = await this.prisma.payment.findUnique({
       where: { orderId },
-      include: { order: { include: { items: { include: { product: { select: { sellerId: true } } } }, buyer: { select: { name: true } } } } },
+      include: { order: { include: { items: { include: { product: { select: { sellerId: true } } } }, buyer: { select: { id: true, name: true } } } } },
     })
     if (!payment) throw new NotFoundException('Pembayaran tidak ditemukan')
+    if (userId && payment.order.buyer.id !== userId) throw new ForbiddenException('Bukan pesanan Anda')
 
     const data: any = { status }
     if (status === 'PAID') data.paidAt = new Date()
@@ -32,17 +37,23 @@ export class PaymentsService {
 
       const sellerIds = [...new Set(payment.order.items.map((i) => i.product.sellerId))]
       for (const sellerId of sellerIds) {
-        await this.prisma.notification.create({
+        const notif = await this.prisma.notification.create({
           data: {
             title: 'Pembayaran Diterima',
             message: `Pesanan #${orderId.slice(-8).toUpperCase()} telah dibayar oleh ${payment.order.buyer.name}`,
             userId: sellerId,
           },
         })
+        this.notifGateway.notifyUser(sellerId, notif)
       }
     }
 
-    return updated
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId },
+      include: { items: { include: { product: { select: { id: true, name: true, price: true } } } }, payment: true },
+    })
+
+    return { payment: updated, order, redirectUrl: `/orders/${orderId}` }
   }
 
   async handleWebhook(payload: any) {

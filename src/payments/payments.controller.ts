@@ -22,14 +22,14 @@ export class PaymentsController {
   @Patch(':orderId/status')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.BUYER, Role.SELLER, Role.ADMIN)
+  @Roles(Role.BUYER)
   async updatePaymentStatus(
     @Param('orderId') orderId: string,
     @Body() input: UpdatePaymentStatusInput,
     @Req() req: any,
   ) {
-    const payment = await this.payments.updateStatus(orderId, input.status)
-    return payment
+    const result = await this.payments.updateStatus(orderId, input.status, req.user.id)
+    return result
   }
 
   @Post('webhook')

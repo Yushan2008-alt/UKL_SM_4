@@ -41,6 +41,8 @@ export type PaymentMinAggregateOutputType = {
   status: $Enums.PaymentStatus | null
   paidAt: Date | null
   invoiceNo: string | null
+  qrCodeUrl: string | null
+  qrString: string | null
   createdAt: Date | null
   orderId: string | null
 }
@@ -52,6 +54,8 @@ export type PaymentMaxAggregateOutputType = {
   status: $Enums.PaymentStatus | null
   paidAt: Date | null
   invoiceNo: string | null
+  qrCodeUrl: string | null
+  qrString: string | null
   createdAt: Date | null
   orderId: string | null
 }
@@ -63,6 +67,8 @@ export type PaymentCountAggregateOutputType = {
   status: number
   paidAt: number
   invoiceNo: number
+  qrCodeUrl: number
+  qrString: number
   createdAt: number
   orderId: number
   _all: number
@@ -84,6 +90,8 @@ export type PaymentMinAggregateInputType = {
   status?: true
   paidAt?: true
   invoiceNo?: true
+  qrCodeUrl?: true
+  qrString?: true
   createdAt?: true
   orderId?: true
 }
@@ -95,6 +103,8 @@ export type PaymentMaxAggregateInputType = {
   status?: true
   paidAt?: true
   invoiceNo?: true
+  qrCodeUrl?: true
+  qrString?: true
   createdAt?: true
   orderId?: true
 }
@@ -106,6 +116,8 @@ export type PaymentCountAggregateInputType = {
   status?: true
   paidAt?: true
   invoiceNo?: true
+  qrCodeUrl?: true
+  qrString?: true
   createdAt?: true
   orderId?: true
   _all?: true
@@ -204,6 +216,8 @@ export type PaymentGroupByOutputType = {
   status: $Enums.PaymentStatus
   paidAt: Date | null
   invoiceNo: string
+  qrCodeUrl: string | null
+  qrString: string | null
   createdAt: Date
   orderId: string
   _count: PaymentCountAggregateOutputType | null
@@ -238,6 +252,8 @@ export type PaymentWhereInput = {
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   invoiceNo?: Prisma.StringFilter<"Payment"> | string
+  qrCodeUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
+  qrString?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   orderId?: Prisma.StringFilter<"Payment"> | string
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
@@ -250,6 +266,8 @@ export type PaymentOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceNo?: Prisma.SortOrder
+  qrCodeUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  qrString?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   order?: Prisma.OrderOrderByWithRelationInput
@@ -266,6 +284,8 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   method?: Prisma.StringFilter<"Payment"> | string
   status?: Prisma.EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  qrCodeUrl?: Prisma.StringNullableFilter<"Payment"> | string | null
+  qrString?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
 }, "id" | "invoiceNo" | "orderId">
@@ -277,6 +297,8 @@ export type PaymentOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   invoiceNo?: Prisma.SortOrder
+  qrCodeUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  qrString?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
   _count?: Prisma.PaymentCountOrderByAggregateInput
@@ -296,6 +318,8 @@ export type PaymentScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
   invoiceNo?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  qrCodeUrl?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  qrString?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   orderId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
 }
@@ -307,6 +331,8 @@ export type PaymentCreateInput = {
   status?: $Enums.PaymentStatus
   paidAt?: Date | string | null
   invoiceNo?: string
+  qrCodeUrl?: string | null
+  qrString?: string | null
   createdAt?: Date | string
   order: Prisma.OrderCreateNestedOneWithoutPaymentInput
 }
@@ -318,6 +344,8 @@ export type PaymentUncheckedCreateInput = {
   status?: $Enums.PaymentStatus
   paidAt?: Date | string | null
   invoiceNo?: string
+  qrCodeUrl?: string | null
+  qrString?: string | null
   createdAt?: Date | string
   orderId: string
 }
@@ -329,6 +357,8 @@ export type PaymentUpdateInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceNo?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrString?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.OrderUpdateOneRequiredWithoutPaymentNestedInput
 }
@@ -340,6 +370,8 @@ export type PaymentUncheckedUpdateInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceNo?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrString?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -351,6 +383,8 @@ export type PaymentCreateManyInput = {
   status?: $Enums.PaymentStatus
   paidAt?: Date | string | null
   invoiceNo?: string
+  qrCodeUrl?: string | null
+  qrString?: string | null
   createdAt?: Date | string
   orderId: string
 }
@@ -362,6 +396,8 @@ export type PaymentUpdateManyMutationInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceNo?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrString?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -372,6 +408,8 @@ export type PaymentUncheckedUpdateManyInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceNo?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrString?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -388,6 +426,8 @@ export type PaymentCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   invoiceNo?: Prisma.SortOrder
+  qrCodeUrl?: Prisma.SortOrder
+  qrString?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
 }
@@ -403,6 +443,8 @@ export type PaymentMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   invoiceNo?: Prisma.SortOrder
+  qrCodeUrl?: Prisma.SortOrder
+  qrString?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
 }
@@ -414,6 +456,8 @@ export type PaymentMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   invoiceNo?: Prisma.SortOrder
+  qrCodeUrl?: Prisma.SortOrder
+  qrString?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderId?: Prisma.SortOrder
 }
@@ -469,6 +513,8 @@ export type PaymentCreateWithoutOrderInput = {
   status?: $Enums.PaymentStatus
   paidAt?: Date | string | null
   invoiceNo?: string
+  qrCodeUrl?: string | null
+  qrString?: string | null
   createdAt?: Date | string
 }
 
@@ -479,6 +525,8 @@ export type PaymentUncheckedCreateWithoutOrderInput = {
   status?: $Enums.PaymentStatus
   paidAt?: Date | string | null
   invoiceNo?: string
+  qrCodeUrl?: string | null
+  qrString?: string | null
   createdAt?: Date | string
 }
 
@@ -505,6 +553,8 @@ export type PaymentUpdateWithoutOrderInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceNo?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrString?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -515,6 +565,8 @@ export type PaymentUncheckedUpdateWithoutOrderInput = {
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invoiceNo?: Prisma.StringFieldUpdateOperationsInput | string
+  qrCodeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrString?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -527,6 +579,8 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   status?: boolean
   paidAt?: boolean
   invoiceNo?: boolean
+  qrCodeUrl?: boolean
+  qrString?: boolean
   createdAt?: boolean
   orderId?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -539,6 +593,8 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   status?: boolean
   paidAt?: boolean
   invoiceNo?: boolean
+  qrCodeUrl?: boolean
+  qrString?: boolean
   createdAt?: boolean
   orderId?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -551,6 +607,8 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   status?: boolean
   paidAt?: boolean
   invoiceNo?: boolean
+  qrCodeUrl?: boolean
+  qrString?: boolean
   createdAt?: boolean
   orderId?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -563,11 +621,13 @@ export type PaymentSelectScalar = {
   status?: boolean
   paidAt?: boolean
   invoiceNo?: boolean
+  qrCodeUrl?: boolean
+  qrString?: boolean
   createdAt?: boolean
   orderId?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "method" | "status" | "paidAt" | "invoiceNo" | "createdAt" | "orderId", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "method" | "status" | "paidAt" | "invoiceNo" | "qrCodeUrl" | "qrString" | "createdAt" | "orderId", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
 }
@@ -590,6 +650,8 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     status: $Enums.PaymentStatus
     paidAt: Date | null
     invoiceNo: string
+    qrCodeUrl: string | null
+    qrString: string | null
     createdAt: Date
     orderId: string
   }, ExtArgs["result"]["payment"]>
@@ -1022,6 +1084,8 @@ export interface PaymentFieldRefs {
   readonly status: Prisma.FieldRef<"Payment", 'PaymentStatus'>
   readonly paidAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly invoiceNo: Prisma.FieldRef<"Payment", 'String'>
+  readonly qrCodeUrl: Prisma.FieldRef<"Payment", 'String'>
+  readonly qrString: Prisma.FieldRef<"Payment", 'String'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly orderId: Prisma.FieldRef<"Payment", 'String'>
 }
