@@ -3,12 +3,23 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { ReviewsService } from './reviews.service'
 import { CreateReviewInput } from './dto/create-review.input'
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard'
+import { RolesGuard } from '../common/guards/roles.guard'
+import { Roles } from '../common/decorators/roles.decorator'
+import { Role } from '../common/enums/role.enum'
 import { CurrentUser } from '../common/decorators/current-user.decorator'
 
 @ApiTags('Reviews')
 @Controller('reviews')
 export class ReviewsController {
   constructor(private reviews: ReviewsService) {}
+
+  @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  async getAllReviews() {
+    return this.reviews.findAll()
+  }
 
   @Get('product/:productId')
   async productReviews(@Param('productId') productId: string) {

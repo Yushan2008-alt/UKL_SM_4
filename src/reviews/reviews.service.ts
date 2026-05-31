@@ -6,6 +6,16 @@ import { CreateReviewInput } from './dto/create-review.input'
 export class ReviewsService {
   constructor(private prisma: PrismaService) {}
 
+  async findAll() {
+    return this.prisma.review.findMany({
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        product: { select: { id: true, name: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+  }
+
   async findByProduct(productId: string) {
     return this.prisma.review.findMany({
       where: { productId, isVisible: true },

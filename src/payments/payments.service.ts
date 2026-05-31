@@ -21,4 +21,25 @@ export class PaymentsService {
 
     return this.prisma.payment.update({ where: { orderId }, data })
   }
+
+  async handleWebhook(payload: any) {
+    // TODO: Validasi signature/header dari Payment Gateway (misal: Midtrans/Xendit)
+    const { orderId, transaction_status } = payload
+    
+    if (orderId && transaction_status) {
+      let status: PaymentStatus | undefined
+
+      if (transaction_status === 'settlement' || transaction_status === 'capture') {
+        status = PaymentStatus.PAID
+      } else if (transaction_status === 'expire' || transaction_status === 'cancel') {
+        status = PaymentStatus.FAILED
+      }
+      
+      if (status) {
+        await this.updateStatus(orderId, status)
+      }
+    }
+
+    return { message: 'Webhook processed' }
+  }
 }
