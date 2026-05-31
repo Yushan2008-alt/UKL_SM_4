@@ -19,11 +19,12 @@ async function getPrisma() {
 async function main() {
   const prisma = await getPrisma()
   const hashedPassword = await bcrypt.hash('password123', 12)
+  const adminPassword = await bcrypt.hash('minuklcommerce', 12)
 
   await prisma.user.upsert({
     where: { email: 'admin@studentcommerce.id' },
-    update: {},
-    create: { name: 'Admin', email: 'admin@studentcommerce.id', password: hashedPassword, role: 'ADMIN', isVerified: true },
+    update: { password: adminPassword, role: 'ADMIN', isVerified: true },
+    create: { name: 'Admin', email: 'admin@studentcommerce.id', password: adminPassword, role: 'ADMIN', isVerified: true },
   })
 
   const seller = await prisma.user.upsert({
