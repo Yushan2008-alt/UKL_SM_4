@@ -20,6 +20,13 @@ export class ProductsController {
     return this.productsService.findAll(filter)
   }
 
+  @Get('seller')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  async sellerProducts(@CurrentUser() user: any) {
+    return this.productsService.findBySeller(user.id)
+  }
+
   @Get(':id')
   async product(@Param('id') id: string) {
     return this.productsService.findOne(id)

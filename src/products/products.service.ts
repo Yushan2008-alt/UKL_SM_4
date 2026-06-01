@@ -46,6 +46,16 @@ export class ProductsService {
     return { items, total, page, limit }
   }
 
+  async findBySeller(sellerId: string) {
+    const rawItems = await this.prisma.product.findMany({
+      where: { sellerId },
+      orderBy: { createdAt: 'desc' },
+      include: { images: true, category: true, seller: { select: { id: true, name: true, email: true } } },
+    });
+
+    return rawItems.map((item: any) => ({ ...item, price: Number(item.price) }));
+  }
+
   async findOne(id: string) {
     const product = await this.prisma.product.findUnique({
       where: { id },

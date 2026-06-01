@@ -9,4 +9,5 @@ export class UpdateProductInput {
   @ApiPropertyOptional() @IsOptional() @IsUUID() categoryId?: string
   @ApiPropertyOptional({ enum: ['PHYSICAL', 'DIGITAL'] }) @IsOptional() @IsEnum(['PHYSICAL', 'DIGITAL']) productType?: 'PHYSICAL' | 'DIGITAL'
   @ApiPropertyOptional() @IsOptional() @ValidateIf(o => o.productType === 'DIGITAL') fileUrl?: string
+  @ApiPropertyOptional() @IsOptional() imageUrl?: string
 }
