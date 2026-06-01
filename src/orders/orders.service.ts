@@ -50,6 +50,19 @@ export class OrdersService {
     return orders.map((o) => this.mapOrderForFrontend(o))
   }
 
+  async findAll() {
+    const orders = await this.prisma.order.findMany({
+      include: {
+        items: { include: { product: { select: { id: true, name: true, price: true, productType: true } } } },
+        payment: true,
+        address: true,
+        buyer: { select: { id: true, name: true, email: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    })
+    return orders.map((o) => this.mapOrderForFrontend(o))
+  }
+
   async findOne(id: string) {
     const order = await this.prisma.order.findUnique({
       where: { id },

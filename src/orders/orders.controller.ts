@@ -19,6 +19,9 @@ export class OrdersController {
 
   @Get()
   async myOrders(@CurrentUser() user: any) {
+    if (user.role === Role.ADMIN) {
+      return this.ordersService.findAll()
+    }
     return this.ordersService.findByBuyer(user.id)
   }
 
