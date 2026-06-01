@@ -131,6 +131,7 @@ export class ProductsService {
     if (!product) throw new NotFoundException('Produk tidak ditemukan')
     if (userRole !== 'ADMIN' && product.sellerId !== userId) throw new ForbiddenException('Bukan produk Anda')
 
+    await this.prisma.cartItem.deleteMany({ where: { productId: id } })
     await this.prisma.product.delete({ where: { id } })
     return true
   }
