@@ -3,12 +3,14 @@ import { PrismaService } from '../prisma/prisma.service'
 import { CreateOrderInput } from './dto/create-order.input'
 import { OrderStatus } from '../common/enums/order-status.enum'
 import { NotificationsGateway } from '../notifications/notifications.gateway'
+import { NotificationsService } from '../notifications/notifications.service'
 
 @Injectable()
 export class OrdersService {
   constructor(
     private prisma: PrismaService,
     private notifGateway: NotificationsGateway,
+    private notifService: NotificationsService,
   ) {}
 
   private mapOrderForFrontend(order: any) {
@@ -134,6 +136,18 @@ export class OrdersService {
       return newOrder
     })
 
+    const sellerIds = [...new Set(cart.items.map((i: any) => i.product.sellerId))] as string[]
+    for (const sellerId of sellerIds) {
+      await this.notifService.create(
+        'Pesanan Baru',
+        `Ada pesanan baru dari ${(await this.prisma.user.findUnique({ where: { id: buyerId } }))?.name || 'Pembeli'}`,
+        sellerId,
+        'ORDER',
+        { orderId: order.id, buyerId },
+        `/orders/${order.id}`,
+      )
+    }
+
     return this.findOne(order.id)
   }
 
@@ -141,6 +155,16 @@ export class OrdersService {
     const order = await this.findOne(id)
     if (order.buyerId !== buyerId) throw new BadRequestException('Bukan order Anda')
     const updated = await this.prisma.order.update({ where: { id }, data: { status } })
+
+    await this.notifService.create(
+      'Status Pesanan Diperbarui',
+      `Pesanan #${id.slice(-8).toUpperCase()} sekarang: ${status}`,
+      buyerId,
+      'ORDER',
+      { orderId: id, status },
+      `/orders/${id}`,
+    )
+
     return this.mapOrderForFrontend(updated)
   }
 
@@ -171,6 +195,9 @@ export class OrdersService {
             title: 'Pembayaran Diterima',
             message: `Pesanan #${id.slice(-8).toUpperCase()} telah dibayar!`,
             userId: sellerId,
+            type: 'PAYMENT',
+            data: { orderId: id },
+            link: `/orders/${id}`,
           },
         })
         this.notifGateway.notifyUser(sellerId, notif)

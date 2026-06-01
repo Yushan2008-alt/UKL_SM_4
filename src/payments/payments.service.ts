@@ -4,6 +4,7 @@ import * as crypto from 'crypto'
 import { PrismaService } from '../prisma/prisma.service'
 import { PaymentStatus } from '../common/enums/payment-status.enum'
 import { NotificationsGateway } from '../notifications/notifications.gateway'
+import { NotificationsService } from '../notifications/notifications.service'
 
 @Injectable()
 export class PaymentsService {
@@ -11,6 +12,7 @@ export class PaymentsService {
     private prisma: PrismaService,
     private notifGateway: NotificationsGateway,
     private config: ConfigService,
+    private notifService: NotificationsService,
   ) {}
 
   async findByOrder(orderId: string) {
@@ -37,6 +39,15 @@ export class PaymentsService {
         where: { id: orderId },
         data: { status: 'PROCESSING' },
       })
+
+      await this.notifService.create(
+        'Pembayaran Dikonfirmasi',
+        `Pembayaran untuk pesanan #${orderId.slice(-8).toUpperCase()} telah dikonfirmasi.`,
+        payment.order.buyer.id,
+        'PAYMENT',
+        { orderId, status: 'PAID' },
+        `/orders/${orderId}`,
+      )
     }
 
     const order = await this.prisma.order.findUnique({

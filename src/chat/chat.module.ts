@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ChatGateway } from './chat.gateway'
 import { ChatService } from './chat.service'
 import { ChatController } from './chat.controller'
+import { NotificationsModule } from '../notifications/notifications.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ChatController } from './chat.controller'
         signOptions: { expiresIn: '7d' },
       }),
     }),
+    NotificationsModule,
   ],
   controllers: [ChatController],
   providers: [ChatGateway, ChatService],

@@ -33,6 +33,19 @@ enum ProductType {
   DIGITAL
 }
 
+enum NotificationType {
+  ORDER
+  CHAT
+  PAYMENT
+  SYSTEM
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+}
+
 model User {
   id         String   @id @default(uuid())
   name       String
@@ -201,22 +214,25 @@ model ShippingAddress {
 }
 
 model Notification {
-  id        String   @id @default(uuid())
+  id        String           @id @default(uuid())
   title     String
   message   String
-  isRead    Boolean  @default(false)
-  createdAt DateTime @default(now())
+  type      NotificationType @default(SYSTEM)
+  data      Json?
+  link      String?
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
 }
 
 model Message {
-  id         String   @id @default(uuid())
+  id         String        @id @default(uuid())
   content    String
-  status     String   @default("sent")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  status     MessageStatus @default(SENT)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 
   sender   User   @relation("SentMessages", fields: [senderId], references: [id])
   senderId String

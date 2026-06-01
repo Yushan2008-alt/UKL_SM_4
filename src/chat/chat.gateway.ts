@@ -8,6 +8,9 @@ import {
 import { Server, Socket } from 'socket.io'
 import { JwtService } from '@nestjs/jwt'
 import { ChatService } from './chat.service'
+import { NotificationsGateway } from '../notifications/notifications.gateway'
+import { NotificationsService } from '../notifications/notifications.service'
+import { PrismaService } from '../prisma/prisma.service'
 
 @WebSocketGateway({
   cors: {
@@ -24,6 +27,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private jwtService: JwtService,
     private chatService: ChatService,
+    private notificationsGateway: NotificationsGateway,
+    private notificationsService: NotificationsService,
+    private prisma: PrismaService,
   ) {}
 
   async handleConnection(socket: Socket) {
@@ -95,6 +101,26 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     if (this.userSockets.has(data.receiverId)) {
       this.chatService.markAsDelivered(message.id)
     }
+
+    const sender = await this.prisma.user.findUnique({ where: { id: senderId } })
+    const senderName = sender?.name || 'Pengguna'
+
+    this.notificationsGateway.notifyUser(data.receiverId, {
+      title: 'Pesan Baru',
+      message: `Pesan baru dari ${senderName}: ${content}`,
+      type: 'CHAT',
+      data: { senderId, chatContent: content },
+      link: `/chat?userId=${senderId}`,
+    })
+
+    await this.notificationsService.create(
+      'Pesan Baru',
+      `Pesan baru dari ${senderName}: ${content}`,
+      data.receiverId,
+      'CHAT',
+      { senderId, chatContent: content },
+      `/chat?userId=${senderId}`,
+    )
   }
 
   @SubscribeMessage('mark_read')

@@ -7,7 +7,7 @@ export class ChatService {
 
   async createMessage(senderId: string, receiverId: string, content: string) {
     return this.prisma.message.create({
-      data: { senderId, receiverId, content, status: 'sent' },
+      data: { senderId, receiverId, content, status: 'SENT' },
     })
   }
 
@@ -26,14 +26,14 @@ export class ChatService {
   async markAsDelivered(messageId: string) {
     return this.prisma.message.update({
       where: { id: messageId },
-      data: { status: 'delivered' },
+      data: { status: 'DELIVERED' },
     })
   }
 
   async markAsRead(messageId: string) {
     return this.prisma.message.update({
       where: { id: messageId },
-      data: { status: 'read' },
+      data: { status: 'READ' },
     })
   }
 }
