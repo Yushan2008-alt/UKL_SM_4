@@ -7,8 +7,20 @@ import { OrderStatus } from '../common/enums/order-status.enum'
 export class OrdersService {
   constructor(private prisma: PrismaService) {}
 
+  private mapOrderForFrontend(order: any) {
+    if (!order) return order
+    return {
+      ...order,
+      totalPrice: order.totalAmount,
+      items: order.items?.map(({ priceAtTime, ...rest }: any) => ({
+        ...rest,
+        price: priceAtTime,
+      })),
+    }
+  }
+
   async findByBuyer(buyerId: string) {
-    return this.prisma.order.findMany({
+    const orders = await this.prisma.order.findMany({
       where: { buyerId },
       include: {
         items: { include: { product: { select: { id: true, name: true, price: true } } } },
@@ -16,10 +28,11 @@ export class OrdersService {
       },
       orderBy: { createdAt: 'desc' },
     })
+    return orders.map((o) => this.mapOrderForFrontend(o))
   }
 
   async findBySeller(sellerId: string) {
-    return this.prisma.order.findMany({
+    const orders = await this.prisma.order.findMany({
       where: { items: { some: { product: { sellerId } } } },
       include: {
         items: { include: { product: { select: { id: true, name: true, price: true } } } },
@@ -29,6 +42,7 @@ export class OrdersService {
       },
       orderBy: { createdAt: 'desc' },
     })
+    return orders.map((o) => this.mapOrderForFrontend(o))
   }
 
   async findOne(id: string) {
@@ -41,7 +55,7 @@ export class OrdersService {
       },
     })
     if (!order) throw new NotFoundException('Order tidak ditemukan')
-    return order
+    return this.mapOrderForFrontend(order)
   }
 
   async createOrder(buyerId: string, input: CreateOrderInput) {
@@ -107,7 +121,8 @@ export class OrdersService {
   async updateStatus(id: string, buyerId: string, status: OrderStatus) {
     const order = await this.findOne(id)
     if (order.buyerId !== buyerId) throw new BadRequestException('Bukan order Anda')
-    return this.prisma.order.update({ where: { id }, data: { status } })
+    const updated = await this.prisma.order.update({ where: { id }, data: { status } })
+    return this.mapOrderForFrontend(updated)
   }
 
   async verifyOrder(id: string, userId: string, userRole: string, action: 'accept' | 'reject') {
@@ -122,7 +137,7 @@ export class OrdersService {
 
     const newStatus = action === 'accept' ? OrderStatus.PROCESSING : OrderStatus.CANCELLED
 
-    return this.prisma.order.update({
+    const updated = await this.prisma.order.update({
       where: { id },
       data: { status: newStatus },
       include: {
@@ -130,5 +145,6 @@ export class OrdersService {
         payment: true,
       },
     })
+    return this.mapOrderForFrontend(updated)
   }
 }

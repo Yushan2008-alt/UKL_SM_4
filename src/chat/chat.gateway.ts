@@ -32,7 +32,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         socket.handshake.auth?.token ||
         (socket.handshake.headers?.cookie
           ?.split(';')
-          .find((c) => c.trim().startsWith('access_token='))
+          .find((c) => c.trim().startsWith('token='))
           ?.split('=')[1])
 
       if (!token) {

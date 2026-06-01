@@ -22,7 +22,7 @@ export class PaymentsController {
   @Patch(':orderId/status')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.BUYER)
+  @Roles(Role.SELLER, Role.ADMIN)
   async updatePaymentStatus(
     @Param('orderId') orderId: string,
     @Body() input: UpdatePaymentStatusInput,
