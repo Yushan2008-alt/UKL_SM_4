@@ -4,14 +4,12 @@ import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 import type { PrismaClient } from '../@generated/prisma/client.js'
 
-let PC: new (opts: any) => PrismaClient
+let PC: Promise<typeof import('../@generated/prisma/client.js')>
 
 async function getPC() {
-  if (!PC) {
-    const mod = await import('../@generated/prisma/client.js')
-    PC = mod.PrismaClient
-  }
-  return PC
+  if (!PC) PC = import('../@generated/prisma/client.js')
+  const mod = await PC
+  return mod.PrismaClient
 }
 
 function isLocalhost(url: string): boolean {

@@ -49,6 +49,12 @@ export class AuthService {
 
     if (!payload.email) throw new UnauthorizedException('Email tidak ditemukan di token Google')
 
+    const allowedDomains = ['gmail.com', 'student.smkn4.com']
+    const emailDomain = payload.email.split('@')[1]
+    if (!allowedDomains.includes(emailDomain)) {
+      throw new UnauthorizedException('Domain email tidak terdaftar')
+    }
+
     let user = await this.prisma.user.findUnique({ where: { email: payload.email } })
     let isNewUser = false
 
@@ -107,13 +113,13 @@ export class AuthService {
     res.cookie('access_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     res.cookie('user_role', user.role, {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
 

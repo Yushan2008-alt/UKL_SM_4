@@ -22,6 +22,11 @@ export class OrdersController {
     return this.ordersService.findByBuyer(user.id)
   }
 
+  @Get('seller')
+  async sellerOrders(@CurrentUser() user: any) {
+    return this.ordersService.findBySeller(user.id)
+  }
+
   @Get(':id')
   async order(@Param('id') id: string) {
     return this.ordersService.findOne(id)

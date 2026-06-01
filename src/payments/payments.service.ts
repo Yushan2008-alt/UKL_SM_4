@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException, ForbiddenException, Logger } from '@nestjs/common'
+import { Injectable, NotFoundException, ForbiddenException, UnauthorizedException, Logger } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import * as crypto from 'crypto'
 import { PrismaService } from '../prisma/prisma.service'
 import { PaymentStatus } from '../common/enums/payment-status.enum'
 import { NotificationsGateway } from '../notifications/notifications.gateway'
@@ -8,6 +10,7 @@ export class PaymentsService {
   constructor(
     private prisma: PrismaService,
     private notifGateway: NotificationsGateway,
+    private config: ConfigService,
   ) {}
 
   async findByOrder(orderId: string) {
@@ -34,18 +37,6 @@ export class PaymentsService {
         where: { id: orderId },
         data: { status: 'PROCESSING' },
       })
-
-      const sellerIds = [...new Set(payment.order.items.map((i) => i.product.sellerId))]
-      for (const sellerId of sellerIds) {
-        const notif = await this.prisma.notification.create({
-          data: {
-            title: 'Pembayaran Diterima',
-            message: `Pesanan #${orderId.slice(-8).toUpperCase()} telah dibayar oleh ${payment.order.buyer.name}`,
-            userId: sellerId,
-          },
-        })
-        this.notifGateway.notifyUser(sellerId, notif)
-      }
     }
 
     const order = await this.prisma.order.findUnique({
@@ -60,8 +51,18 @@ export class PaymentsService {
     }
   }
 
-  async handleWebhook(payload: any) {
-    // TODO: Validasi signature/header dari Payment Gateway (misal: Midtrans/Xendit)
+  async handleWebhook(payload: any, signature?: string) {
+    const serverKey = this.config.get<string>('MIDTRANS_SERVER_KEY')
+    if (serverKey && signature) {
+      const computedSignature = crypto
+        .createHash('sha512')
+        .update(payload.order_id + payload.status_code + payload.gross_amount + serverKey)
+        .digest('hex')
+      if (signature !== computedSignature) {
+        throw new UnauthorizedException('Invalid webhook signature')
+      }
+    }
+
     const { orderId, transaction_status } = payload
     
     if (orderId && transaction_status) {
