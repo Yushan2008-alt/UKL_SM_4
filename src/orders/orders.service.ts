@@ -78,7 +78,8 @@ export class OrdersService {
     }
 
     const subtotal = cart.items.reduce((sum, item) => sum + Number(item.product.price) * item.quantity, 0)
-    const shippingCost = 15000
+    const isDigitalOnly = cart.items.every(item => item.product.productType === 'DIGITAL')
+    const shippingCost = isDigitalOnly ? 0 : 15000
     const totalAmount = subtotal + shippingCost
 
     const order = await this.prisma.$transaction(async (tx) => {
