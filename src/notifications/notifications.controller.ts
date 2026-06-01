@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Param, Body, UseGuards } from '@nestjs/common'
+import { Controller, Get, Post, Param, Body, Query, UseGuards } from '@nestjs/common'
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { NotificationsService } from './notifications.service'
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard'
 import { CurrentUser } from '../common/decorators/current-user.decorator'
+import type { NotificationType } from '../@generated/prisma/enums'
 
 @ApiTags('Notifications')
 @ApiBearerAuth()
@@ -17,8 +18,8 @@ export class NotificationsController {
   }
 
   @Get('unread-count')
-  async unreadCount(@CurrentUser() user: any) {
-    return this.notifications.getUnreadCount(user.id)
+  async unreadCount(@CurrentUser() user: any, @Query('type') type?: NotificationType) {
+    return this.notifications.getUnreadCount(user.id, type)
   }
 
   @Post(':id/read')

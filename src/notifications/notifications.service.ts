@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
+import type { NotificationType } from '../@generated/prisma/enums'
 
 @Injectable()
 export class NotificationsService {
@@ -28,7 +29,9 @@ export class NotificationsService {
     return true
   }
 
-  async getUnreadCount(userId: string) {
-    return this.prisma.notification.count({ where: { userId, isRead: false } })
+  async getUnreadCount(userId: string, type?: NotificationType) {
+    return this.prisma.notification.count({
+      where: { userId, isRead: false, ...(type ? { type } : {}) },
+    })
   }
 }
