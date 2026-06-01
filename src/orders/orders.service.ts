@@ -28,7 +28,7 @@ export class OrdersService {
     const orders = await this.prisma.order.findMany({
       where: { buyerId },
       include: {
-        items: { include: { product: { select: { id: true, name: true, price: true } } } },
+        items: { include: { product: { select: { id: true, name: true, price: true, productType: true } } } },
         payment: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -40,7 +40,7 @@ export class OrdersService {
     const orders = await this.prisma.order.findMany({
       where: { items: { some: { product: { sellerId } } } },
       include: {
-        items: { include: { product: { select: { id: true, name: true, price: true } } } },
+        items: { include: { product: { select: { id: true, name: true, price: true, productType: true } } } },
         payment: true,
         address: true,
         buyer: { select: { id: true, name: true, email: true } },
@@ -54,7 +54,7 @@ export class OrdersService {
     const order = await this.prisma.order.findUnique({
       where: { id },
       include: {
-        items: { include: { product: { select: { id: true, name: true, price: true, sellerId: true } } } },
+        items: { include: { product: { select: { id: true, name: true, price: true, sellerId: true, productType: true } } } },
         payment: true,
         address: true,
       },
@@ -146,7 +146,7 @@ export class OrdersService {
         where: { id },
         data: { status: 'PROCESSING' },
         include: {
-          items: { include: { product: { select: { id: true, name: true, price: true, sellerId: true } } } },
+          items: { include: { product: { select: { id: true, name: true, price: true, sellerId: true, productType: true } } } },
           payment: true,
         },
       })
@@ -185,7 +185,7 @@ export class OrdersService {
       where: { id },
       data: { status: newStatus },
       include: {
-        items: { include: { product: { select: { id: true, name: true, price: true } } } },
+        items: { include: { product: { select: { id: true, name: true, price: true, productType: true } } } },
         payment: true,
       },
     })
