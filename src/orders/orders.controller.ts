@@ -32,6 +32,11 @@ export class OrdersController {
     return this.ordersService.createOrder(user.id, input)
   }
 
+  @Patch(':id/pay')
+  async payOrder(@CurrentUser() user: any, @Param('id') id: string) {
+    return this.ordersService.payOrder(id, user.id)
+  }
+
   @Patch(':id/status')
   async updateOrderStatus(
     @CurrentUser() user: any,

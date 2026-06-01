@@ -2,19 +2,24 @@ import { Injectable, BadRequestException, NotFoundException, ForbiddenException 
 import { PrismaService } from '../prisma/prisma.service'
 import { CreateOrderInput } from './dto/create-order.input'
 import { OrderStatus } from '../common/enums/order-status.enum'
+import { NotificationsGateway } from '../notifications/notifications.gateway'
 
 @Injectable()
 export class OrdersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notifGateway: NotificationsGateway,
+  ) {}
 
   private mapOrderForFrontend(order: any) {
     if (!order) return order
     return {
       ...order,
-      totalPrice: order.totalAmount,
+      totalPrice: Number(order.totalAmount),
+      shippingCost: Number(order.shippingCost),
       items: order.items?.map(({ priceAtTime, ...rest }: any) => ({
         ...rest,
-        price: priceAtTime,
+        price: Number(priceAtTime),
       })),
     }
   }
@@ -122,6 +127,44 @@ export class OrdersService {
     const order = await this.findOne(id)
     if (order.buyerId !== buyerId) throw new BadRequestException('Bukan order Anda')
     const updated = await this.prisma.order.update({ where: { id }, data: { status } })
+    return this.mapOrderForFrontend(updated)
+  }
+
+  async payOrder(id: string, buyerId: string) {
+    const order = await this.findOne(id)
+    if (order.buyerId !== buyerId) throw new BadRequestException('Bukan order Anda')
+    if (order.status !== 'PENDING') throw new BadRequestException('Sudah dibayar')
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      await tx.payment.update({
+        where: { orderId: id },
+        data: { status: 'PAID', paidAt: new Date() },
+      })
+
+      const updatedOrder = await tx.order.update({
+        where: { id },
+        data: { status: 'PROCESSING' },
+        include: {
+          items: { include: { product: { select: { id: true, name: true, price: true, sellerId: true } } } },
+          payment: true,
+        },
+      })
+
+      const sellerIds = [...new Set(updatedOrder.items.map((i: any) => i.product.sellerId))] as string[]
+      for (const sellerId of sellerIds) {
+        const notif = await tx.notification.create({
+          data: {
+            title: 'Pembayaran Diterima',
+            message: `Pesanan #${id.slice(-8).toUpperCase()} telah dibayar!`,
+            userId: sellerId,
+          },
+        })
+        this.notifGateway.notifyUser(sellerId, notif)
+      }
+
+      return updatedOrder
+    })
+
     return this.mapOrderForFrontend(updated)
   }
 

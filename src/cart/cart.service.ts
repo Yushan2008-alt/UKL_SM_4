@@ -5,6 +5,27 @@ import { PrismaService } from '../prisma/prisma.service'
 export class CartService {
   constructor(private prisma: PrismaService) {}
 
+  private toNumberDeep(obj: any): any {
+    if (!obj) return obj
+    if (Array.isArray(obj)) return obj.map((i) => this.toNumberDeep(i))
+    if (typeof obj !== 'object') return obj
+
+    const result: any = {}
+    for (const key of Object.keys(obj)) {
+      const val = obj[key]
+      if (key === 'price' || key === 'amount' || key === 'totalAmount' || key === 'shippingCost') {
+        result[key] = Number(val)
+      } else if (Array.isArray(val)) {
+        result[key] = val.map((i: any) => this.toNumberDeep(i))
+      } else if (val && typeof val === 'object' && !(val instanceof Date)) {
+        result[key] = this.toNumberDeep(val)
+      } else {
+        result[key] = val
+      }
+    }
+    return result
+  }
+
   private async ensureCart(userId: string) {
     let cart = await this.prisma.cart.findUnique({
       where: { userId },
@@ -32,7 +53,7 @@ export class CartService {
         },
       })
     }
-    return cart
+    return this.toNumberDeep(cart)
   }
 
   async getCart(userId: string) {

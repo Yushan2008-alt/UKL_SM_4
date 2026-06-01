@@ -30,7 +30,7 @@ export class ProductsService {
 
     const skip = (page - 1) * limit
 
-    const [items, total] = await Promise.all([
+    const [rawItems, total] = await Promise.all([
       this.prisma.product.findMany({
         where,
         orderBy,
@@ -40,6 +40,8 @@ export class ProductsService {
       }),
       this.prisma.product.count({ where }),
     ])
+
+    const items = rawItems.map((item: any) => ({ ...item, price: Number(item.price) }))
 
     return { items, total, page, limit }
   }
@@ -55,7 +57,7 @@ export class ProductsService {
       },
     })
     if (!product) throw new NotFoundException('Produk tidak ditemukan')
-    return product
+    return { ...product, price: Number(product.price) }
   }
 
   async create(userId: string, userRole: string, input: CreateProductInput) {
@@ -90,10 +92,11 @@ export class ProductsService {
       }
     }
 
-    return this.prisma.product.create({
+    const created = await this.prisma.product.create({
       data,
       include: { images: true, category: true, seller: { select: { id: true, name: true, email: true } } },
     })
+    return { ...created, price: Number(created.price) }
   }
 
   async update(id: string, userId: string, userRole: string, input: UpdateProductInput) {
@@ -115,11 +118,12 @@ export class ProductsService {
       }
     }
 
-    return this.prisma.product.update({
+    const updated = await this.prisma.product.update({
       where: { id },
       data: updateData,
       include: { images: true, category: true, seller: { select: { id: true, name: true, email: true } } },
     })
+    return { ...updated, price: Number(updated.price) }
   }
 
   async remove(id: string, userId: string, userRole: string) {
