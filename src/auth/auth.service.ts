@@ -102,6 +102,12 @@ export class AuthService {
     const valid = await bcrypt.compare(input.password, user.password)
     if (!valid) throw new UnauthorizedException('Password salah')
 
+    if (user.role === 'SELLER' && !user.isVerified) {
+      throw new UnauthorizedException(
+        'Akun seller Anda belum diverifikasi oleh admin. Silakan tunggu persetujuan.',
+      )
+    }
+
     const token = this.signToken(user)
 
     res.cookie('access_token', token, {

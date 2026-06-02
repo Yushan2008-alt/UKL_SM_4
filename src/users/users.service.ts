@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { UpdateUserInput } from './dto/update-user.input'
+import { BecomeSellerInput } from './dto/become-seller.input'
 
 @Injectable()
 export class UsersService {
@@ -27,15 +28,22 @@ export class UsersService {
     return this.prisma.user.update({ where: { id }, data: input })
   }
 
-  async becomeSeller(id: string) {
+  async becomeSeller(id: string, input?: BecomeSellerInput) {
     const user = await this.findById(id)
     if (user.role === 'SELLER') throw new BadRequestException('Anda sudah menjadi penjual')
     if (user.role === 'ADMIN') throw new BadRequestException('Admin tidak bisa menjadi penjual')
 
     return this.prisma.user.update({
       where: { id },
-      data: { role: 'SELLER', isVerified: false },
-      select: { id: true, name: true, email: true, role: true, isVerified: true },
+      data: {
+        role: 'SELLER',
+        isVerified: false,
+        storeName: input?.storeName,
+        storePhone: input?.storePhone,
+        storeAddress: input?.storeAddress,
+        storeDescription: input?.storeDescription,
+      },
+      select: { id: true, name: true, email: true, role: true, isVerified: true, storeName: true },
     })
   }
 

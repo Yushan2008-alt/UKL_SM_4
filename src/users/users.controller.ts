@@ -2,6 +2,7 @@ import { Controller, Get, Patch, Post, Param, Body, UseGuards } from '@nestjs/co
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { UsersService } from './users.service'
 import { UpdateUserInput } from './dto/update-user.input'
+import { BecomeSellerInput } from './dto/become-seller.input'
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard'
 import { RolesGuard } from '../common/guards/roles.guard'
 import { Roles } from '../common/decorators/roles.decorator'
@@ -34,8 +35,8 @@ export class UsersController {
 
   @Post('become-seller')
   @UseGuards(JwtAuthGuard)
-  async becomeSeller(@CurrentUser() user: any) {
-    return this.usersService.becomeSeller(user.id)
+  async becomeSeller(@CurrentUser() user: any, @Body() input: BecomeSellerInput) {
+    return this.usersService.becomeSeller(user.id, input)
   }
 
   @Patch()

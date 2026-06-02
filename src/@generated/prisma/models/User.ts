@@ -33,6 +33,10 @@ export type UserMinAggregateOutputType = {
   isVerified: boolean | null
   isActive: boolean | null
   avatarUrl: string | null
+  storeName: string | null
+  storePhone: string | null
+  storeAddress: string | null
+  storeDescription: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +50,10 @@ export type UserMaxAggregateOutputType = {
   isVerified: boolean | null
   isActive: boolean | null
   avatarUrl: string | null
+  storeName: string | null
+  storePhone: string | null
+  storeAddress: string | null
+  storeDescription: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +67,10 @@ export type UserCountAggregateOutputType = {
   isVerified: number
   isActive: number
   avatarUrl: number
+  storeName: number
+  storePhone: number
+  storeAddress: number
+  storeDescription: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,6 +86,10 @@ export type UserMinAggregateInputType = {
   isVerified?: true
   isActive?: true
   avatarUrl?: true
+  storeName?: true
+  storePhone?: true
+  storeAddress?: true
+  storeDescription?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,6 +103,10 @@ export type UserMaxAggregateInputType = {
   isVerified?: true
   isActive?: true
   avatarUrl?: true
+  storeName?: true
+  storePhone?: true
+  storeAddress?: true
+  storeDescription?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +120,10 @@ export type UserCountAggregateInputType = {
   isVerified?: true
   isActive?: true
   avatarUrl?: true
+  storeName?: true
+  storePhone?: true
+  storeAddress?: true
+  storeDescription?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -186,6 +210,10 @@ export type UserGroupByOutputType = {
   isVerified: boolean
   isActive: boolean
   avatarUrl: string | null
+  storeName: string | null
+  storePhone: string | null
+  storeAddress: string | null
+  storeDescription: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -220,6 +248,10 @@ export type UserWhereInput = {
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   isActive?: Prisma.BoolFilter<"User"> | boolean
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  storeName?: Prisma.StringNullableFilter<"User"> | string | null
+  storePhone?: Prisma.StringNullableFilter<"User"> | string | null
+  storeAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  storeDescription?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
@@ -241,6 +273,10 @@ export type UserOrderByWithRelationInput = {
   isVerified?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeName?: Prisma.SortOrderInput | Prisma.SortOrder
+  storePhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   cart?: Prisma.CartOrderByWithRelationInput
@@ -265,6 +301,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   isActive?: Prisma.BoolFilter<"User"> | boolean
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  storeName?: Prisma.StringNullableFilter<"User"> | string | null
+  storePhone?: Prisma.StringNullableFilter<"User"> | string | null
+  storeAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  storeDescription?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
@@ -286,6 +326,10 @@ export type UserOrderByWithAggregationInput = {
   isVerified?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeName?: Prisma.SortOrderInput | Prisma.SortOrder
+  storePhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -305,6 +349,10 @@ export type UserScalarWhereWithAggregatesInput = {
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  storeName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  storePhone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  storeAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  storeDescription?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -318,6 +366,10 @@ export type UserCreateInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -339,6 +391,10 @@ export type UserUncheckedCreateInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -360,6 +416,10 @@ export type UserUpdateInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -381,6 +441,10 @@ export type UserUncheckedUpdateInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -402,6 +466,10 @@ export type UserCreateManyInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -415,6 +483,10 @@ export type UserUpdateManyMutationInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -428,6 +500,10 @@ export type UserUncheckedUpdateManyInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -441,6 +517,10 @@ export type UserCountOrderByAggregateInput = {
   isVerified?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  storeName?: Prisma.SortOrder
+  storePhone?: Prisma.SortOrder
+  storeAddress?: Prisma.SortOrder
+  storeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -454,6 +534,10 @@ export type UserMaxOrderByAggregateInput = {
   isVerified?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  storeName?: Prisma.SortOrder
+  storePhone?: Prisma.SortOrder
+  storeAddress?: Prisma.SortOrder
+  storeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -467,6 +551,10 @@ export type UserMinOrderByAggregateInput = {
   isVerified?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  storeName?: Prisma.SortOrder
+  storePhone?: Prisma.SortOrder
+  storeAddress?: Prisma.SortOrder
+  storeDescription?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -617,6 +705,10 @@ export type UserCreateWithoutProductsInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -637,6 +729,10 @@ export type UserUncheckedCreateWithoutProductsInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -673,6 +769,10 @@ export type UserUpdateWithoutProductsInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -693,6 +793,10 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -713,6 +817,10 @@ export type UserCreateWithoutCartInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
@@ -733,6 +841,10 @@ export type UserUncheckedCreateWithoutCartInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -769,6 +881,10 @@ export type UserUpdateWithoutCartInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
@@ -789,6 +905,10 @@ export type UserUncheckedUpdateWithoutCartInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -809,6 +929,10 @@ export type UserCreateWithoutOrdersInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -829,6 +953,10 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -865,6 +993,10 @@ export type UserUpdateWithoutOrdersInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -885,6 +1017,10 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -905,6 +1041,10 @@ export type UserCreateWithoutReviewsInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -925,6 +1065,10 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -961,6 +1105,10 @@ export type UserUpdateWithoutReviewsInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -981,6 +1129,10 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1001,6 +1153,10 @@ export type UserCreateWithoutAddressesInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1021,6 +1177,10 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1057,6 +1217,10 @@ export type UserUpdateWithoutAddressesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1077,6 +1241,10 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1097,6 +1265,10 @@ export type UserCreateWithoutNotificationsInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1117,6 +1289,10 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1153,6 +1329,10 @@ export type UserUpdateWithoutNotificationsInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1173,6 +1353,10 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1193,6 +1377,10 @@ export type UserCreateWithoutSentMessagesInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1213,6 +1401,10 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1238,6 +1430,10 @@ export type UserCreateWithoutReceivedMessagesInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1258,6 +1454,10 @@ export type UserUncheckedCreateWithoutReceivedMessagesInput = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: string | null
+  storeName?: string | null
+  storePhone?: string | null
+  storeAddress?: string | null
+  storeDescription?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1294,6 +1494,10 @@ export type UserUpdateWithoutSentMessagesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1314,6 +1518,10 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1345,6 +1553,10 @@ export type UserUpdateWithoutReceivedMessagesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1365,6 +1577,10 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1470,6 +1686,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: boolean
+  storeName?: boolean
+  storePhone?: boolean
+  storeAddress?: boolean
+  storeDescription?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
@@ -1492,6 +1712,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: boolean
+  storeName?: boolean
+  storePhone?: boolean
+  storeAddress?: boolean
+  storeDescription?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1505,6 +1729,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: boolean
+  storeName?: boolean
+  storePhone?: boolean
+  storeAddress?: boolean
+  storeDescription?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1518,11 +1746,15 @@ export type UserSelectScalar = {
   isVerified?: boolean
   isActive?: boolean
   avatarUrl?: boolean
+  storeName?: boolean
+  storePhone?: boolean
+  storeAddress?: boolean
+  storeDescription?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isVerified" | "isActive" | "avatarUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isVerified" | "isActive" | "avatarUrl" | "storeName" | "storePhone" | "storeAddress" | "storeDescription" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
@@ -1558,6 +1790,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isVerified: boolean
     isActive: boolean
     avatarUrl: string | null
+    storeName: string | null
+    storePhone: string | null
+    storeAddress: string | null
+    storeDescription: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1999,6 +2235,10 @@ export interface UserFieldRefs {
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
+  readonly storeName: Prisma.FieldRef<"User", 'String'>
+  readonly storePhone: Prisma.FieldRef<"User", 'String'>
+  readonly storeAddress: Prisma.FieldRef<"User", 'String'>
+  readonly storeDescription: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
