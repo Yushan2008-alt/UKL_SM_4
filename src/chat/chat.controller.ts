@@ -15,6 +15,12 @@ export class ChatController {
     private prisma: PrismaService,
   ) {}
 
+  @Get('conversations')
+  @UseGuards(JwtAuthGuard)
+  async getConversations(@Req() req: any) {
+    return this.chatService.getConversations(req.user.id)
+  }
+
   @Get('conversation/:userId')
   @UseGuards(JwtAuthGuard)
   async getConversation(@Req() req: any, @Param('userId') otherUserId: string) {

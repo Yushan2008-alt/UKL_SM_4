@@ -99,7 +99,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     socket.emit('message_sent', messagePayload)
 
     if (this.userSockets.has(data.receiverId)) {
-      this.chatService.markAsDelivered(message.id)
+      this.chatService.markAsDelivered(message.id, data.receiverId)
     }
 
     const sender = await this.prisma.user.findUnique({ where: { id: senderId } })
@@ -125,7 +125,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('mark_read')
   async handleMarkRead(socket: Socket, data: { messageId: string }) {
-    const message = await this.chatService.markAsRead(data.messageId)
+    const message = await this.chatService.markAsRead(data.messageId, socket.data.userId)
     this.server.to(message.senderId).emit('message_read', { messageId: data.messageId })
   }
 }
