@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { NotificationsService } from '../notifications/notifications.service'
+import { NotificationsGateway } from '../notifications/notifications.gateway'
+import { NotificationType } from '../@generated/prisma/enums'
 import { UpdateUserInput } from './dto/update-user.input'
 import { BecomeSellerInput } from './dto/become-seller.input'
 
@@ -9,6 +11,7 @@ export class UsersService {
   constructor(
     private prisma: PrismaService,
     private notificationsService: NotificationsService,
+    private notificationsGateway: NotificationsGateway,
   ) {}
 
   async findById(id: string) {
@@ -98,12 +101,22 @@ export class UsersService {
     try {
       const admins = await this.prisma.user.findMany({ where: { role: 'ADMIN' } })
       for (const admin of admins) {
-        await this.notificationsService.create(
+        const notification = await this.notificationsService.create(
           'Pendaftaran Seller Baru',
           `${updatedUser.name} mendaftar sebagai seller dan menunggu verifikasi`,
           admin.id,
-          'SELLER_REGISTRATION' as any,
+          NotificationType.SELLER_REGISTRATION,
         )
+
+        // ✅ Real-time notifikasi via Socket.IO ke admin
+        this.notificationsGateway.notifyUser(admin.id, {
+          id: notification.id,
+          title: notification.title,
+          message: notification.message,
+          type: NotificationType.SELLER_REGISTRATION,
+          isRead: false,
+          createdAt: notification.createdAt,
+        })
       }
     } catch (e) {
       // Non-fatal: jangan gagalkan request utama jika notif ke admin gagal
@@ -150,13 +163,23 @@ export class UsersService {
       },
     })
 
-    // ✅ Kirim notifikasi ke user yang diverifikasi
-    await this.notificationsService.create(
+    // ✅ Kirim notifikasi ke user yang diverifikasi (database)
+    const notification = await this.notificationsService.create(
       '🎉 Selamat! Akun Seller Anda Disetujui',
       'Akun seller Anda telah diverifikasi. Anda sekarang dapat mulai berjualan di StudentCommerce!',
       sellerId,
-      'SELLER_APPROVED' as any,
+      NotificationType.SELLER_APPROVED,
     )
+
+    // ✅ Real-time notifikasi via Socket.IO ke user
+    this.notificationsGateway.notifyUser(sellerId, {
+      id: notification.id,
+      title: notification.title,
+      message: notification.message,
+      type: NotificationType.SELLER_APPROVED,
+      isRead: false,
+      createdAt: notification.createdAt,
+    })
 
     return updatedUser
   }

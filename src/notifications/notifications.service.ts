@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
-import type { NotificationType } from '../@generated/prisma/enums'
+import { NotificationType } from '../@generated/prisma/enums'
 
 @Injectable()
 export class NotificationsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(title: string, message: string, userId: string, type?: 'ORDER' | 'CHAT' | 'PAYMENT' | 'SYSTEM', data?: any, link?: string) {
-    return this.prisma.notification.create({ data: { title, message, userId, type: type ?? 'SYSTEM', data: data ?? undefined, link } })
+  async create(title: string, message: string, userId: string, type?: NotificationType, data?: any, link?: string) {
+    return this.prisma.notification.create({ data: { title, message, userId, type: type ?? NotificationType.SYSTEM, data: data ?? undefined, link } })
   }
 
   async findByUser(userId: string) {

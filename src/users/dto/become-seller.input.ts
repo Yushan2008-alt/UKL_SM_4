@@ -8,9 +8,9 @@ export class BecomeSellerInput {
   @MaxLength(100)
   shopName: string
 
-  @ApiProperty({ example: 'Menjual buku bekas dan alat tulis murah', description: 'Deskripsi toko (min 10, max 500 karakter)' })
+  @ApiProperty({ example: 'Menjual buku bekas dan alat tulis murah', description: 'Deskripsi toko (min 3, max 500 karakter)' })
   @IsString()
-  @MinLength(10)
+  @MinLength(3)
   @MaxLength(500)
   shopDescription: string
 
