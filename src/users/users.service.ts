@@ -1,11 +1,15 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common'
+import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
+import { NotificationsService } from '../notifications/notifications.service'
 import { UpdateUserInput } from './dto/update-user.input'
 import { BecomeSellerInput } from './dto/become-seller.input'
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notificationsService: NotificationsService,
+  ) {}
 
   async findById(id: string) {
     const user = await this.prisma.user.findUnique({ where: { id } })
@@ -14,7 +18,29 @@ export class UsersService {
   }
 
   async findAll() {
-    return this.prisma.user.findMany()
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isVerified: true,
+        isActive: true,
+        avatarUrl: true,
+        sellerStatus: true,
+        shopName: true,
+        shopDescription: true,
+        shopLogo: true,
+        category: true,
+        storeName: true,
+        storePhone: true,
+        storeAddress: true,
+        storeDescription: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    })
   }
 
   async update(id: string, input: UpdateUserInput) {
@@ -28,34 +54,110 @@ export class UsersService {
     return this.prisma.user.update({ where: { id }, data: input })
   }
 
-  async becomeSeller(id: string, input?: BecomeSellerInput) {
+  async becomeSeller(id: string, input: BecomeSellerInput) {
     const user = await this.findById(id)
-    if (user.role === 'SELLER') throw new BadRequestException('Anda sudah menjadi penjual')
-    if (user.role === 'ADMIN') throw new BadRequestException('Admin tidak bisa menjadi penjual')
 
-    return this.prisma.user.update({
+    // Validasi status
+    if (user.sellerStatus === 'PENDING') {
+      throw new BadRequestException('Pendaftaran seller Anda masih dalam proses verifikasi')
+    }
+    if (user.role === 'SELLER' || user.sellerStatus === 'APPROVED') {
+      throw new BadRequestException('Anda sudah terdaftar sebagai seller')
+    }
+    if (user.role === 'ADMIN') {
+      throw new BadRequestException('Admin tidak bisa mendaftar sebagai seller')
+    }
+
+    // Update user dengan status PENDING (role tetap BUYER)
+    const updatedUser = await this.prisma.user.update({
       where: { id },
       data: {
-        role: 'SELLER',
-        isVerified: false,
-        storeName: input?.storeName,
-        storePhone: input?.storePhone,
-        storeAddress: input?.storeAddress,
-        storeDescription: input?.storeDescription,
+        role: 'BUYER',               // ✅ Tetap BUYER
+        sellerStatus: 'PENDING',     // ✅ Set status pending
+        shopName: input.shopName,
+        shopDescription: input.shopDescription,
+        shopLogo: input.shopLogo,
+        category: input.category,
       },
-      select: { id: true, name: true, email: true, role: true, isVerified: true, storeName: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isVerified: true,
+        avatarUrl: true,
+        sellerStatus: true,
+        shopName: true,
+        shopDescription: true,
+        shopLogo: true,
+        category: true,
+      },
     })
+
+    // Kirim notifikasi ke semua admin
+    try {
+      const admins = await this.prisma.user.findMany({ where: { role: 'ADMIN' } })
+      for (const admin of admins) {
+        await this.notificationsService.create(
+          'Pendaftaran Seller Baru',
+          `${updatedUser.name} mendaftar sebagai seller dan menunggu verifikasi`,
+          admin.id,
+          'SELLER_REGISTRATION' as any,
+        )
+      }
+    } catch (e) {
+      // Non-fatal: jangan gagalkan request utama jika notif ke admin gagal
+      console.error('Gagal kirim notif ke admin:', e)
+    }
+
+    return updatedUser
   }
 
-  async verifySeller(id: string) {
-    const user = await this.findById(id)
-    if (user.role !== 'SELLER') throw new BadRequestException('Hanya akun SELLER yang bisa diverifikasi')
-    if (user.isVerified) throw new BadRequestException('Akun ini sudah diverifikasi')
+  async verifySeller(sellerId: string, adminId: string) {
+    // Validasi admin
+    const admin = await this.findById(adminId)
+    if (admin.role !== 'ADMIN') {
+      throw new ForbiddenException('Unauthorized: Admin only')
+    }
 
-    return this.prisma.user.update({
-      where: { id },
-      data: { isVerified: true },
-      select: { id: true, name: true, email: true, role: true, isVerified: true },
+    // Cek user yang akan diverifikasi
+    const user = await this.findById(sellerId)
+
+    if (user.sellerStatus !== 'PENDING') {
+      throw new BadRequestException('User tidak dalam status pending')
+    }
+
+    // ✅ Update role → SELLER, sellerStatus → APPROVED, isVerified → true
+    const updatedUser = await this.prisma.user.update({
+      where: { id: sellerId },
+      data: {
+        role: 'SELLER',
+        sellerStatus: 'APPROVED',
+        isVerified: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isVerified: true,
+        avatarUrl: true,
+        sellerStatus: true,
+        shopName: true,
+        shopDescription: true,
+        shopLogo: true,
+        category: true,
+      },
     })
+
+    // ✅ Kirim notifikasi ke user yang diverifikasi
+    await this.notificationsService.create(
+      '🎉 Selamat! Akun Seller Anda Disetujui',
+      'Akun seller Anda telah diverifikasi. Anda sekarang dapat mulai berjualan di StudentCommerce!',
+      sellerId,
+      'SELLER_APPROVED' as any,
+    )
+
+    return updatedUser
   }
 }

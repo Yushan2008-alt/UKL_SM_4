@@ -13,6 +13,12 @@ enum Role {
   ADMIN
 }
 
+enum SellerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 enum OrderStatus {
   PENDING
   PROCESSING
@@ -38,6 +44,8 @@ enum NotificationType {
   CHAT
   PAYMENT
   SYSTEM
+  SELLER_APPROVED
+  SELLER_REGISTRATION
 }
 
 enum MessageStatus {
@@ -59,6 +67,15 @@ model User {
   storePhone       String?
   storeAddress     String?
   storeDescription String?
+
+  // === Seller Verification Fields ===
+  sellerStatus    SellerStatus? // null = bukan seller, PENDING = menunggu, APPROVED = disetujui
+  shopName        String?
+  shopDescription String?
+  shopLogo        String?
+  category        String?
+  // ===================================
+
   createdAt        DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

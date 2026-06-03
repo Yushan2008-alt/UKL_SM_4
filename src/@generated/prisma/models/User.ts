@@ -37,6 +37,11 @@ export type UserMinAggregateOutputType = {
   storePhone: string | null
   storeAddress: string | null
   storeDescription: string | null
+  sellerStatus: $Enums.SellerStatus | null
+  shopName: string | null
+  shopDescription: string | null
+  shopLogo: string | null
+  category: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +59,11 @@ export type UserMaxAggregateOutputType = {
   storePhone: string | null
   storeAddress: string | null
   storeDescription: string | null
+  sellerStatus: $Enums.SellerStatus | null
+  shopName: string | null
+  shopDescription: string | null
+  shopLogo: string | null
+  category: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -71,6 +81,11 @@ export type UserCountAggregateOutputType = {
   storePhone: number
   storeAddress: number
   storeDescription: number
+  sellerStatus: number
+  shopName: number
+  shopDescription: number
+  shopLogo: number
+  category: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -90,6 +105,11 @@ export type UserMinAggregateInputType = {
   storePhone?: true
   storeAddress?: true
   storeDescription?: true
+  sellerStatus?: true
+  shopName?: true
+  shopDescription?: true
+  shopLogo?: true
+  category?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -107,6 +127,11 @@ export type UserMaxAggregateInputType = {
   storePhone?: true
   storeAddress?: true
   storeDescription?: true
+  sellerStatus?: true
+  shopName?: true
+  shopDescription?: true
+  shopLogo?: true
+  category?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -124,6 +149,11 @@ export type UserCountAggregateInputType = {
   storePhone?: true
   storeAddress?: true
   storeDescription?: true
+  sellerStatus?: true
+  shopName?: true
+  shopDescription?: true
+  shopLogo?: true
+  category?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -214,6 +244,11 @@ export type UserGroupByOutputType = {
   storePhone: string | null
   storeAddress: string | null
   storeDescription: string | null
+  sellerStatus: $Enums.SellerStatus | null
+  shopName: string | null
+  shopDescription: string | null
+  shopLogo: string | null
+  category: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -252,6 +287,11 @@ export type UserWhereInput = {
   storePhone?: Prisma.StringNullableFilter<"User"> | string | null
   storeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   storeDescription?: Prisma.StringNullableFilter<"User"> | string | null
+  sellerStatus?: Prisma.EnumSellerStatusNullableFilter<"User"> | $Enums.SellerStatus | null
+  shopName?: Prisma.StringNullableFilter<"User"> | string | null
+  shopDescription?: Prisma.StringNullableFilter<"User"> | string | null
+  shopLogo?: Prisma.StringNullableFilter<"User"> | string | null
+  category?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
@@ -277,6 +317,11 @@ export type UserOrderByWithRelationInput = {
   storePhone?: Prisma.SortOrderInput | Prisma.SortOrder
   storeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   storeDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  sellerStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  shopName?: Prisma.SortOrderInput | Prisma.SortOrder
+  shopDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  shopLogo?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   cart?: Prisma.CartOrderByWithRelationInput
@@ -305,6 +350,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   storePhone?: Prisma.StringNullableFilter<"User"> | string | null
   storeAddress?: Prisma.StringNullableFilter<"User"> | string | null
   storeDescription?: Prisma.StringNullableFilter<"User"> | string | null
+  sellerStatus?: Prisma.EnumSellerStatusNullableFilter<"User"> | $Enums.SellerStatus | null
+  shopName?: Prisma.StringNullableFilter<"User"> | string | null
+  shopDescription?: Prisma.StringNullableFilter<"User"> | string | null
+  shopLogo?: Prisma.StringNullableFilter<"User"> | string | null
+  category?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
@@ -330,6 +380,11 @@ export type UserOrderByWithAggregationInput = {
   storePhone?: Prisma.SortOrderInput | Prisma.SortOrder
   storeAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   storeDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  sellerStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  shopName?: Prisma.SortOrderInput | Prisma.SortOrder
+  shopDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  shopLogo?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -353,6 +408,11 @@ export type UserScalarWhereWithAggregatesInput = {
   storePhone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   storeAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   storeDescription?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  sellerStatus?: Prisma.EnumSellerStatusNullableWithAggregatesFilter<"User"> | $Enums.SellerStatus | null
+  shopName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  shopDescription?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  shopLogo?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  category?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -370,6 +430,11 @@ export type UserCreateInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -395,6 +460,11 @@ export type UserUncheckedCreateInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -420,6 +490,11 @@ export type UserUpdateInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -445,6 +520,11 @@ export type UserUncheckedUpdateInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -470,6 +550,11 @@ export type UserCreateManyInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -487,6 +572,11 @@ export type UserUpdateManyMutationInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -504,6 +594,11 @@ export type UserUncheckedUpdateManyInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -521,6 +616,11 @@ export type UserCountOrderByAggregateInput = {
   storePhone?: Prisma.SortOrder
   storeAddress?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrder
+  sellerStatus?: Prisma.SortOrder
+  shopName?: Prisma.SortOrder
+  shopDescription?: Prisma.SortOrder
+  shopLogo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -538,6 +638,11 @@ export type UserMaxOrderByAggregateInput = {
   storePhone?: Prisma.SortOrder
   storeAddress?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrder
+  sellerStatus?: Prisma.SortOrder
+  shopName?: Prisma.SortOrder
+  shopDescription?: Prisma.SortOrder
+  shopLogo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -555,6 +660,11 @@ export type UserMinOrderByAggregateInput = {
   storePhone?: Prisma.SortOrder
   storeAddress?: Prisma.SortOrder
   storeDescription?: Prisma.SortOrder
+  sellerStatus?: Prisma.SortOrder
+  shopName?: Prisma.SortOrder
+  shopDescription?: Prisma.SortOrder
+  shopLogo?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -578,6 +688,10 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableEnumSellerStatusFieldUpdateOperationsInput = {
+  set?: $Enums.SellerStatus | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -709,6 +823,11 @@ export type UserCreateWithoutProductsInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -733,6 +852,11 @@ export type UserUncheckedCreateWithoutProductsInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -773,6 +897,11 @@ export type UserUpdateWithoutProductsInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -797,6 +926,11 @@ export type UserUncheckedUpdateWithoutProductsInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -821,6 +955,11 @@ export type UserCreateWithoutCartInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
@@ -845,6 +984,11 @@ export type UserUncheckedCreateWithoutCartInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -885,6 +1029,11 @@ export type UserUpdateWithoutCartInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
@@ -909,6 +1058,11 @@ export type UserUncheckedUpdateWithoutCartInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -933,6 +1087,11 @@ export type UserCreateWithoutOrdersInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -957,6 +1116,11 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -997,6 +1161,11 @@ export type UserUpdateWithoutOrdersInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1021,6 +1190,11 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1045,6 +1219,11 @@ export type UserCreateWithoutReviewsInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1069,6 +1248,11 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1109,6 +1293,11 @@ export type UserUpdateWithoutReviewsInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1133,6 +1322,11 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1157,6 +1351,11 @@ export type UserCreateWithoutAddressesInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1181,6 +1380,11 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1221,6 +1425,11 @@ export type UserUpdateWithoutAddressesInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1245,6 +1454,11 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1269,6 +1483,11 @@ export type UserCreateWithoutNotificationsInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1293,6 +1512,11 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1333,6 +1557,11 @@ export type UserUpdateWithoutNotificationsInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1357,6 +1586,11 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1381,6 +1615,11 @@ export type UserCreateWithoutSentMessagesInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1405,6 +1644,11 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1434,6 +1678,11 @@ export type UserCreateWithoutReceivedMessagesInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
@@ -1458,6 +1707,11 @@ export type UserUncheckedCreateWithoutReceivedMessagesInput = {
   storePhone?: string | null
   storeAddress?: string | null
   storeDescription?: string | null
+  sellerStatus?: $Enums.SellerStatus | null
+  shopName?: string | null
+  shopDescription?: string | null
+  shopLogo?: string | null
+  category?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
@@ -1498,6 +1752,11 @@ export type UserUpdateWithoutSentMessagesInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1522,6 +1781,11 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1557,6 +1821,11 @@ export type UserUpdateWithoutReceivedMessagesInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
@@ -1581,6 +1850,11 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
   storePhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sellerStatus?: Prisma.NullableEnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus | null
+  shopName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shopLogo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
@@ -1690,6 +1964,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   storePhone?: boolean
   storeAddress?: boolean
   storeDescription?: boolean
+  sellerStatus?: boolean
+  shopName?: boolean
+  shopDescription?: boolean
+  shopLogo?: boolean
+  category?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
@@ -1716,6 +1995,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   storePhone?: boolean
   storeAddress?: boolean
   storeDescription?: boolean
+  sellerStatus?: boolean
+  shopName?: boolean
+  shopDescription?: boolean
+  shopLogo?: boolean
+  category?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1733,6 +2017,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   storePhone?: boolean
   storeAddress?: boolean
   storeDescription?: boolean
+  sellerStatus?: boolean
+  shopName?: boolean
+  shopDescription?: boolean
+  shopLogo?: boolean
+  category?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1750,11 +2039,16 @@ export type UserSelectScalar = {
   storePhone?: boolean
   storeAddress?: boolean
   storeDescription?: boolean
+  sellerStatus?: boolean
+  shopName?: boolean
+  shopDescription?: boolean
+  shopLogo?: boolean
+  category?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isVerified" | "isActive" | "avatarUrl" | "storeName" | "storePhone" | "storeAddress" | "storeDescription" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isVerified" | "isActive" | "avatarUrl" | "storeName" | "storePhone" | "storeAddress" | "storeDescription" | "sellerStatus" | "shopName" | "shopDescription" | "shopLogo" | "category" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
@@ -1794,6 +2088,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     storePhone: string | null
     storeAddress: string | null
     storeDescription: string | null
+    sellerStatus: $Enums.SellerStatus | null
+    shopName: string | null
+    shopDescription: string | null
+    shopLogo: string | null
+    category: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -2239,6 +2538,11 @@ export interface UserFieldRefs {
   readonly storePhone: Prisma.FieldRef<"User", 'String'>
   readonly storeAddress: Prisma.FieldRef<"User", 'String'>
   readonly storeDescription: Prisma.FieldRef<"User", 'String'>
+  readonly sellerStatus: Prisma.FieldRef<"User", 'SellerStatus'>
+  readonly shopName: Prisma.FieldRef<"User", 'String'>
+  readonly shopDescription: Prisma.FieldRef<"User", 'String'>
+  readonly shopLogo: Prisma.FieldRef<"User", 'String'>
+  readonly category: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

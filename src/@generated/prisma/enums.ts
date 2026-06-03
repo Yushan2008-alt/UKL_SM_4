@@ -18,6 +18,15 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const SellerStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type SellerStatus = (typeof SellerStatus)[keyof typeof SellerStatus]
+
+
 export const OrderStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',
@@ -51,7 +60,9 @@ export const NotificationType = {
   ORDER: 'ORDER',
   CHAT: 'CHAT',
   PAYMENT: 'PAYMENT',
-  SYSTEM: 'SYSTEM'
+  SYSTEM: 'SYSTEM',
+  SELLER_APPROVED: 'SELLER_APPROVED',
+  SELLER_REGISTRATION: 'SELLER_REGISTRATION'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
